@@ -1,0 +1,109 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 100;
+}
+
+h1 {
+    display: inline-block;
+    color: black;
+    margin: 20px 20px;
+    text-align: center;
+    font-size: 50px;
+}
+
+.principal-container {
+    display: flex;
+}
+
+
+.upper-container p {
+    display: inline-block;
+    padding-right: 40px;
+    font-size: 25px;
+    margin-left: 40px;
+}
+
+.upper-container input {
+    background: lightgrey;
+    transition: all 1s;
+    padding: 2px;
+    margin-right: 20px;
+}
+
+.upper-container input:focus {
+    background: white;
+}
+
+.upper-container button {
+    cursor: pointer;
+    margin: 30px;
+    width: 200px;
+    height: 25px;
+    background: rgb(126, 34, 34);
+    color: white;
+    transition: all .4s;
+}
+
+.upper-container button:hover {
+    background: rgb(84, 207, 35);
+    color: black;
+}
+
+.author-name {
+    font-size: 30px;
+}
+
+.user-points-string {
+    font-size: 25px;
+}
+
+.user-points {
+    font-size: 25px;
+}
+
+.contenedor-izq {
+    color: black;
+    width: 50%;
+    margin-left: 40px;
+}
+
+.table-blueprints {
+    width: 100%;
+    padding: 20px 40px 30px 2px;
+    text-align: center;
+}
+
+thead {
+    border: 2px solid black;
+    background: #810000;
+    color: #ffffff;
+}
+
+th, tr, td {
+    border: 2px solid #000000;
+}
+
+tbody {
+    border: 2px solid black;
+    background: lightgrey;
+    color: black;
+}
+
+.contenedor-der {
+    color: black;
+    width: 50%;
+    margin-right: 40px;
+}
+
+#myCanvas {
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #030303;
+}
+
+.actual-name {
+    font-size: 30px;
+    margin: 30px;
+}
