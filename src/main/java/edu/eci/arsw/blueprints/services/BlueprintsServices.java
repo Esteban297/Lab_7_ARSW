@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
-   
     @Autowired
     BlueprintsPersistence bpp = null;
 
@@ -77,4 +76,7 @@ public class BlueprintsServices {
         return bpp.getBlueprintByAuthor(author);
     }
 
+    public void deleteBlueprint(String author, String name) throws BlueprintNotFoundException {
+        bpp.deleteBlueprint(author, name);
+    }
 }

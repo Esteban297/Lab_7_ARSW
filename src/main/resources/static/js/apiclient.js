@@ -1,4 +1,4 @@
-var apiclient = (function () {
+var api = (function () {
     return {
         getBlueprintsByAuthor: function (author, callback) {
             const promise = $.get({
@@ -8,7 +8,8 @@ var apiclient = (function () {
             promise.then(function (data) {
                     callback(null, data);
                 }, function (error) {
-                    alert("No existen datos del autor!")
+                    window.location.href = "/"
+                    alert("No existen datos del autor o se ha eliminado todo del mismo!")
                 }
             );
         },

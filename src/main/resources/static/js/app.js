@@ -1,6 +1,9 @@
 const app = (function () {
+
     let author;
     let blueprintName;
+    let useSelectedModule;
+    let create = false;
 
     function getName() {
         $("#author-name").text(author + "'s " + "blueprints:");
@@ -10,13 +13,30 @@ const app = (function () {
         $("#actual-name").text("Current blueprint: " + blueprintName);
     }
 
+    function clearAll() {
+        $("#actual-name").text("Current blueprint:");
+        $("#button-der__id").css("visibility", "hidden");
+        $("#button-izq__id").css("visibility", "hidden");
+        $("#newbp").css("visibility", "hidden");
+        apievent.clearCanvas();
+        const c = document.getElementById("myCanvas");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.restore();
+        ctx.beginPath();
+    }
+
     function getNameAuthorBlueprints() {
+        clearAll();
+        useSelectedModule = "js/apiclient.js";
         author = $("#author").val();
         if (author === "") {
             alert("Debe ingresar un nombre !");
         } else {
-            apiclient.getBlueprintsByAuthor(author, (req, resp) => {
-                parceroData(resp);
+            $.getScript(useSelectedModule, function () {
+                api.getBlueprintsByAuthor(author, (req, resp) => {
+                    parceroData(resp);
+                });
             });
         }
     }
@@ -49,18 +69,21 @@ const app = (function () {
     }
 
     function getBlueprintByAuthorAndName(data) {
+        $("#newbp").css("visibility", "hidden");
         author = $("#author").val();
         blueprintName = data.id;
-        apiclient.getBlueprintsByNameAndAuthor(blueprintName, author, (req, resp) => {
-            pintaparcero(resp);
+        $.getScript(useSelectedModule, function () {
+            api.getBlueprintsByNameAndAuthor(blueprintName, author, (req, resp) => {
+                pintaparcero(resp);
+            });
         });
     }
 
     function pintaparcero(data) {
         getBluePrintName();
         const puntos = data.points;
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
+        const c = document.getElementById("myCanvas");
+        const ctx = c.getContext("2d");
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.restore();
         ctx.beginPath();
@@ -73,14 +96,102 @@ const app = (function () {
             }
         }
         ctx.stroke();
+        apievent.updatepuntos(puntos)
+        apievent.init()
+        visibility()
     }
 
+    function visibility() {
+        $("#button-der__id").css("visibility", "visible");
+        $("#button-izq__id").css("visibility", "visible");
+    }
+
+    function saveUpdate() {
+        if (create) {
+            saveBlueprint();
+            create = false;
+        } else {
+            updateBlueprint();
+        }
+    }
+
+    function saveBlueprint() {
+        let bluep = $("#newbp").val();
+        blueprintName = bluep;
+        let punticos = apievent.getPuntos();
+        const promise = $.post({
+            url: "/blueprints",
+            contentType: "application/json",
+            data: "{\"author\": \"" + author + "\",\"points\":" + JSON.stringify(punticos) + ",\"name\":" + "\"" + bluep + "\"" + "}",
+        });
+        promise.then(function (data) {
+                $.getScript(useSelectedModule, function () {
+                    api.getBlueprintsByAuthor(author, (req, resp) => {
+                        parceroData(resp);
+                    });
+                });
+            }, function (error) {
+                alert("No se pudo crear el blueprint")
+            }
+        );
+    }
+
+    function updateBlueprint() {
+        let punticos = apievent.getPuntos();
+        return $.ajax({
+            url: "/blueprints" + "/" + author + "/" + blueprintName,
+            type: 'PUT',
+            data: "{\"author\": \"" + author + "\",\"points\":" + JSON.stringify(punticos) + ",\"name\":" + "\"" + blueprintName + "\"" + "}",
+            contentType: "application/json",
+            success: function (data) {
+                $.getScript(useSelectedModule, function () {
+                    api.getBlueprintsByAuthor(author, (req, resp) => {
+                        parceroData(resp);
+                    });
+                });
+            }
+        });
+    }
+
+    function deleteBlueprint() {
+        return $.ajax({
+            url: "/blueprints" + "/" + author + "/" + blueprintName,
+            type: 'DELETE',
+            contentType: "application/json",
+            success: function (data) {
+                $.getScript(useSelectedModule, function () {
+                    api.getBlueprintsByAuthor(author, (req, resp) => {
+                        clearAll();
+                        parceroData(resp);
+                    });
+                });
+            }
+        });
+    }
+
+    function createNewBluePrint() {
+        clearAll();
+        $("#newbp").css("visibility", "visible");
+        create = true;
+    }
+
+    function changeInputNew() {
+        let bluep = $("#newbp").val();
+        $("#actual-name").text("Current blueprint: " + bluep);
+        let puntos = [];
+        puntos.push({x: 0, y: 0});
+        apievent.updatepuntos(puntos)
+        apievent.init()
+        visibility()
+    }
 
     return {
-
         getNameAuthorBlueprints: getNameAuthorBlueprints,
-        getBlueprintByAuthorAndName: getBlueprintByAuthorAndName
-
+        getBlueprintByAuthorAndName: getBlueprintByAuthorAndName,
+        saveUpdate: saveUpdate,
+        createNewBluePrint: createNewBluePrint,
+        changeInputNew: changeInputNew,
+        deleteBlueprint: deleteBlueprint
     }
 
 })();

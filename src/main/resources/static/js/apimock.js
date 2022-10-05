@@ -1,11 +1,11 @@
-var apimock = (function () {
+var api = (function () {
 
     const mockdata = [];
 
     mockdata["JhonConnor"] = [
         {
             author: "JhonConnor",
-            name: "house",
+            name: "prueba01",
             points: [
                 {
                     x: 10,
@@ -23,7 +23,7 @@ var apimock = (function () {
         },
         {
             author: "JhonConnor",
-            name: "bike",
+            name: "prueba02",
             points: [
                 {
                     x: 30,
@@ -36,11 +36,26 @@ var apimock = (function () {
             ]
         }
     ]
-
+    mockdata['LexLuthor'] = [
+        {
+            author: 'LexLuthor',
+            name: 'prueba03',
+            points: [
+                {
+                    x: 60,
+                    y: 65
+                },
+                {
+                    x: 70,
+                    y: 75
+                }
+            ]
+        }
+    ]
     mockdata['author1'] = [
         {
             author: 'author1',
-            name: 'prueba1',
+            name: 'prueba04',
             points: [
                 {
                     x: 50,
@@ -60,7 +75,7 @@ var apimock = (function () {
     mockdata['author2'] = [
         {
             author: 'author1',
-            name: 'prueba2',
+            name: 'prueba05',
             points: [
                 {
                     x: 10,
@@ -80,7 +95,7 @@ var apimock = (function () {
     mockdata['author3'] = [
         {
             author: 'author1',
-            name: 'prueba3',
+            name: 'prueba06',
             points: [
                 {
                     x: 84,

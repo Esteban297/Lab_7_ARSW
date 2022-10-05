@@ -6,7 +6,7 @@
 h1 {
     display: inline-block;
     color: black;
-    margin: 20px 20px;
+    margin: 0px 10px;
     text-align: center;
     font-size: 50px;
 }
@@ -14,7 +14,6 @@ h1 {
 .principal-container {
     display: flex;
 }
-
 
 .upper-container p {
     display: inline-block;
@@ -28,10 +27,13 @@ h1 {
     transition: all 1s;
     padding: 2px;
     margin-right: 20px;
+    transition: all 1s;
 }
 
 .upper-container input:focus {
-    background: white;
+    background: grey;
+    height: 40px;
+    color: #fff;
 }
 
 .upper-container button {
@@ -41,12 +43,12 @@ h1 {
     height: 25px;
     background: rgb(126, 34, 34);
     color: white;
-    transition: all .4s;
+    transition: all 1s;
 }
 
 .upper-container button:hover {
     background: rgb(84, 207, 35);
-    color: black;
+    border-radius: 50px;
 }
 
 .author-name {
@@ -75,12 +77,14 @@ h1 {
 
 thead {
     border: 2px solid black;
-    background: #810000;
-    color: #ffffff;
+    background: grey;
+    color: black;
 }
 
-th, tr, td {
-    border: 2px solid #000000;
+th,
+tr,
+td {
+    border: 2px solid black;
 }
 
 tbody {
@@ -96,14 +100,67 @@ tbody {
 }
 
 #myCanvas {
-    margin-left: 20px;
+    margin-left: 30px;
     margin-top: 20px;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #030303;
+    border: 2px solid black;
 }
 
 .actual-name {
     font-size: 30px;
     margin: 30px;
+}
+
+.contenedor-der__button button {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    background: rgb(206, 113, 113);
+    border: 7px solid grey;
+    border-radius: 4px;
+    width: 250px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 1s;
+
+}
+
+.contenedor-der__button button:hover {
+    background: rgb(197, 197, 7);
+    border: 7px solid rgb(197, 197, 7);
+    border-radius: 50px;
+}
+
+.contenedor-der__twoButtons {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.contenedor-der__twoButtons .button-der {
+    background: rgb(197, 197, 7);
+    border: 7px solid rgb(197, 197, 7);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 1s;
+    visibility: hidden;
+}
+
+.contenedor-der__twoButtons .button-der:hover {
+    background: rgb(110, 110, 13);
+    border: 7px solid rgb(110, 110, 13);
+    color: #fff;
+}
+
+.contenedor-der__twoButtons .button-izq {
+    margin-left: 80px;
+    background: rgb(201, 112, 146);
+    border: 7px solid rgb(201, 112, 146);
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 1s;
+    visibility: hidden;
+}
+
+.contenedor-der__twoButtons .button-izq:hover {
+    background: rgb(197, 43, 43);
+    border: 7px solid rgb(197, 43, 43);
 }

@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BlueprintAPIController {
     @Autowired
     BlueprintsServices bps= null;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> GetAllBlueprintFilter(){
         try {
@@ -46,10 +46,10 @@ public class BlueprintAPIController {
             return new ResponseEntity<>(bps.getBlueprintsByAuthor(authorName),HttpStatus.ACCEPTED);
         } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
-        }        
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND.getReasonPhrase(),HttpStatus.NOT_FOUND);
+        }
     }
-    
+
     @RequestMapping(path ="/{author}/{name}",method = RequestMethod.GET)
     public ResponseEntity<?> GetBlueprintByAuthorAndName(@PathVariable ("author") String authorName, @PathVariable ("name") String blueprintName){
         try {
@@ -57,31 +57,40 @@ public class BlueprintAPIController {
         } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
-        }        
+        }
     }
-    
-    @RequestMapping(method = RequestMethod.POST)	
+
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> AddNewBlueprint(@RequestBody Blueprint newBp){
-        
         try {
             bps.addNewBlueprint(newBp);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (BlueprintPersistenceException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);            
-        }        
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);
+        }
 
     }
-    
-    @RequestMapping(path = "/{author}/{name}",method = RequestMethod.PUT)	
+
+    @RequestMapping(path = "/{author}/{name}",method = RequestMethod.PUT)
     public ResponseEntity<?> PutBlueprint(@PathVariable ("author") String author, @PathVariable ("name") String name, @RequestBody Blueprint newBp ){
-        
         try {
             bps.modifyOrAddBlueprint(newBp, author, name);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (BlueprintPersistenceException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(path = "/{author}/{name}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteBlueprint(@PathVariable("author") String author, @PathVariable("name") String name) {
+        try {
+            bps.deleteBlueprint(author, name);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (BlueprintNotFoundException ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 }
